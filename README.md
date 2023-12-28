@@ -18,6 +18,8 @@ This repository is prepared for a linux machine. Windows users can make use of W
 
 The Makefile contains the necessary commands for all the basic tasks. The repository also contains a `tasks.json` and a `launch.json` for usage from VS Code.
 
+Also, remember to edit the makefile to point to your required source code, header files and include directory for your setting.
+
 ---
 1. Run the clang-tidy analyzer, generating the `compile_commands.json` file, and allowing the clangd lsp to provide intellisense in your project correctly.
 > make tidy
