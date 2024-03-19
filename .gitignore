@@ -8,3 +8,6 @@ bin/
 .clang*
 commpile_commands.json
 .bear-config.json
+
+.vscode/
+!.vscode/launch.json

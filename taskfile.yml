@@ -1,0 +1,58 @@
+version: 3
+
+vars:
+  # The release executable file
+  exe_file: bin/program.exe
+
+  # The debuggable executable file
+  dbg_file: bin/debug.exe
+  
+  # The compilation database for clang
+  ccj_file: compile_commands.json
+  
+  # The program entry point (or unit tests for library)
+  src_main: src/main.cpp 
+  # The other source code for compilation (if any)
+  src_code: lib/*.c*
+  
+  # The include flag directory and link libraries (if any)
+  inc_flag: -I./include
+
+  # A temporary file to store the compilation commands
+  tmp_file: temp_cmp.json
+
+  # The warning flags used for 
+  w_flags: -Wall -Wextra -pedantic -std=c++20
+
+tasks:
+  build:
+    cmds:
+      - cmd: clang++ -MJ {{.tmp_file}} -O3  -o ./{{.exe_file}} ./{{.src_main}} ./{{.src_code}} {{.inc_flag}}
+      - task: setup-ccj-file
+    deps:
+      - task: setup-binfolder
+
+  build_debug:
+    cmds:
+      - cmd: clang++ -MJ {{.tmp_file}} -O0 -g -o ./{{.dbg_file}} ./{{.src_main}} ./{{.src_code}} {{.inc_flag}}
+      - task: setup-ccj-file
+    deps:
+      - task: setup-binfolder
+  
+  setup-binfolder:
+    cmds:
+      - mkdir bin
+    
+    status:
+      - test -d bin
+  
+  setup-ccj-file:
+    cmds:
+      - cmd: echo "[" > ./{{.ccj_file}}
+      - cmd: cat {{.tmp_file}} >> ./{{.ccj_file}}
+      - cmd: echo "]" >> ./{{.ccj_file}}
+      - cmd: rm {{.tmp_file}}
+  
+  clean:
+    cmds:
+      - rm ./*.json ./bin/*.exe
