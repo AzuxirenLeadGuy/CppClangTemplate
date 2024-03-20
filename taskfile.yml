@@ -24,6 +24,12 @@ vars:
   # The warning flags used for 
   w_flags: -Wall -Wextra -pedantic -std=c++20
 
+  # The file to store clang analyzer rules
+  tidy_file: .clang-tidy
+
+  # The file to store formatting rules
+  form_file: .clang-format
+
 tasks:
   build:
     cmds:
