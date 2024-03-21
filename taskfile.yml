@@ -47,7 +47,7 @@ tasks:
   
   setup-binfolder:
     cmds:
-      - mkdir bin
+      - cmd: mkdir bin
     
     status:
       - test -d bin
