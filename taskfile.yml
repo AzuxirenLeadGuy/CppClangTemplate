@@ -61,4 +61,8 @@ tasks:
   
   clean:
     cmds:
-      - rm ./*.json ./bin/*.exe
+      - cmd: rm ./*.json ./bin/*.exe
+  
+  format:
+    cmds:
+      - cmd: clang-format -i ./{{.src_main}} ./{{.src_code}}
